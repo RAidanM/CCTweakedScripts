@@ -7,7 +7,7 @@ function circle(cw,r)
         for j = 1, r, 1 do
             turtle.forward()
         end
-        if cw then
+        if cw==true then
             turtle.turnRight()
         else
             turtle.turnLeft()
