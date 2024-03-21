@@ -15,4 +15,4 @@ function circle(cw,r)
     end
 end
 
-circle(args[1], args[2])
+circle(arg[1], arg[2])
