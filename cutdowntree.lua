@@ -53,23 +53,27 @@ function move(distance,pitch)
     end
 end
 
---checks for logs and enters tree
-if spinFor("log") then turtle.dig() end
-turtle.forward()
 
---dig up
-local height = 0
-while checkIf("log","up") do
-    turtle.digUp()
-    turtle.up()
-    height = height + 1
-end
-move(height,"down")
---dig down
-height = 0
-while checkIf("log","down") do
-    turtle.digDown()
-    turtle.down()
-    height = height + 1
-end
-move(height,"up")
+
+repeat
+    --checks for logs and enters tree
+    if spinFor("log") then turtle.dig() end
+    turtle.forward()
+
+    --dig up
+    local height = 0
+    while checkIf("log","up") do
+        turtle.digUp()
+        turtle.up()
+        height = height + 1
+    end
+    move(height,"down")
+    --dig down
+    height = 0
+    while checkIf("log","down") do
+        turtle.digDown()
+        turtle.down()
+        height = height + 1
+    end
+    move(height,"up")
+until not spinFor("log")
