@@ -73,5 +73,3 @@ while checkIf("log","down") do
     height = height + 1
 end
 move(height,"up")
---original position
-turtle.back()
