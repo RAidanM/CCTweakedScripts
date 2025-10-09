@@ -153,6 +153,20 @@ function findInteriorPoints(points,radius)
     return mining_points
 end
 
+function aboveCapacity(percent)
+    local full_slots = 0
+    for i = 1, 16, 1 do
+        if turtle.getItemCount(i) ~= 0 then
+            full_slots = full_slots + 1
+        end
+    end
+    return full_slots/16 > percent
+end
+
+function dropOff()
+    local return_point = {x=X,y=Y,z=Z}
+    
+end
 
 local depth = 0 + arg[1]
 local radius = arg[2]
@@ -170,6 +184,9 @@ repeat
     for i = -rad+1, rad-1, 1 do
         goTo(points[i.."-1"].x,points[i.."-1"].z)
         goTo(points[i.."-2"].x,points[i.."-2"].z)
+        if aboveCapacity(0.75) then
+            dropOff()
+        end
     end
     goTo(0,0)
 
