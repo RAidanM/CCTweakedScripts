@@ -100,6 +100,76 @@ function TurtleHelper.mineMove(x,y,z)
     TurtleHelper.mineTo(turtle_loc,turtle_relative)
 end
 
+function TurtleHelper.corridorTo(origin, destination)
+    local resultant = destination - origin
+    local state = State.load()
+
+    -- y
+    if resultant.y > 0 then
+        for i = 0, resultant.y-1, 1 do
+            if turtle.detectUp() then
+                assert(turtle.digUp())
+            end
+            assert(turtle.up())
+        end
+    else
+        for i = 0, resultant.y+1, -1 do
+            if turtle.detectDown() then
+                assert(turtle.digDown())
+            end
+            assert(turtle.down())
+        end
+    end
+    state["y"] = destination.y
+
+    -- x
+    TurtleHelper.turnTowards(resultant.x,0)
+    for i = 0, math.abs(resultant.x)-1, 1 do
+        if turtle.detect() then
+            assert(turtle.dig())
+        end
+        if turtle.detectUp() then
+            assert(turtle.digUp())
+        end
+        if turtle.detectDown() then
+            assert(turtle.digDown())
+        end
+        assert(turtle.forward())
+    end
+    if turtle.detectUp() then
+        assert(turtle.digUp())
+    end
+    if turtle.detectDown() then
+        assert(turtle.digDown())
+    end
+    state["x"] = destination.x
+
+    -- z
+    TurtleHelper.turnTowards(0,resultant.z)
+    for i = 0, math.abs(resultant.z)-1, 1 do
+        if turtle.detect() then
+            assert(turtle.dig())
+        end
+        if turtle.detectUp() then
+            assert(turtle.digUp())
+        end
+        if turtle.detectDown() then
+            assert(turtle.digDown())
+        end
+        assert(turtle.forward())
+    end
+    if turtle.detectUp() then
+        assert(turtle.digUp())
+    end
+    if turtle.detectDown() then
+        assert(turtle.digDown())
+    end
+    state["z"] = destination.z
+
+    State.save(state)
+
+end
+
 function TurtleHelper.checkIf(desired_block,pitch)
     --reading block info from correct pitch
     local has_block, block_info

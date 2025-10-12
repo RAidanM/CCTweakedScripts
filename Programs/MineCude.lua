@@ -20,6 +20,7 @@ else
     start_coordinate = extrema_two
 end
 
+TurtleHelper.calibrate()
 TurtleHelper.mineTo(turtle_loc, start_coordinate)
 
 
