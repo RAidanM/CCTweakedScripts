@@ -13,6 +13,7 @@ function State.load()
     return data
 end
 
+-- {x = 5, y = 10, z = -2, facing = 1}
 function State.save(data)
     local file = fs.open(FILENAME, "w")
     file.write(textutils.serialize(data))

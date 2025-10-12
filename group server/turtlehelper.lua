@@ -4,12 +4,59 @@ local State = require("state")
 --
 TurtleHelper = {}
 
+
+function TurtleHelper.turnTowards(x, z)
+    local state = State.load()
+    local facing = state["facing"]
+    local goal = facing
+    if z < 0  then
+        print("Turning North (-z)")
+        goal = 0
+    elseif x > 0 then
+        print("Turning East (+x)")
+        goal = 1
+    elseif z > 0 then
+        print("Turning South (+z)")
+        goal = 2
+    elseif x < 0 then
+        print("Turning West (-x)")
+        goal = 3
+    else
+        print("No need to turn")
+        return false
+    end
+
+    if goal == facing then
+        print("No need to turn")
+        return false
+    elseif goal == 3 & facing == 0 then
+        turtle.turnRight()
+    elseif goal == 0 & facing == 3 then
+        turtle.turnLeft()
+    elseif goal > facing then
+        for i = goal, facing, 1 do
+            turtle.turnRight()
+        end
+    elseif goal < facing then
+        for i = goal, facing, 1 do
+            turtle.turnLeft()
+        end
+    end
+
+    if goal == facing then
+        state["facing"] = goal
+        State.save(state)
+    end
+end
+
 -- @param 
 function TurtleHelper.mineTo(origin, destination)
     local resultant = destination - origin
+    
+
 
     -- y
-    if y > 0 then
+    if resultant.y > 0 then
         for i = 0, resultant.y, 1 do
             if turtle.detectUp() then
                 assert(turtle.digUp())
@@ -24,10 +71,35 @@ function TurtleHelper.mineTo(origin, destination)
             assert(turtle.down())
         end
     end
+    print("Hit Y level" .. resultant.y)
     -- x
+    if resultant.x > 0 then
+        for i = 0, resultant.x, 1 do
 
+            if turtle.detectUp() then
+                assert(turtle.digUp())
+            end
+            assert(turtle.up())
+
+        end
+    else
+        for i = 0, resultant.y, -1 do
+            if turtle.detectDown() then
+                assert(turtle.digDown())
+            end
+            assert(turtle.down())
+        end
+    end
+    print("Hit Y level" .. resultant.y)
     -- z
     
+
+
+
+
+
+
+
 end
 
 
@@ -48,6 +120,8 @@ function TurtleHelper.checkIf(desired_block,pitch)
         if string.find(block_name,desired_block) ~= nil then
             return true
         end
+    elseif desired_block=="empty" then
+        return true
     end
     return false
 end
@@ -57,8 +131,6 @@ end
 function TurtleHelper.spinFor(desired_block)
     for i = 1, 4, 1 do
         if TurtleHelper.checkIf(desired_block) then
-            return true
-        elseif (desired_block=="empty") then
             return true
         end
         assert(turtle.turnRight())
@@ -74,7 +146,7 @@ function TurtleHelper.calibrate()
     if TurtleHelper.spinFor("empty") then
         assert(turtle.forward())
         turtle_new_loc = Coordinate.new(gps.locate())
-        resultant = turtle_new_loc - turtle_loc
+        local resultant = turtle_new_loc - turtle_loc
         if (resultant.z == -1) then
             print("Facing North")
             assert(turtle.back())
