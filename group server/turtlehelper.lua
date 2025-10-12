@@ -50,48 +50,55 @@ end
 -- @param 
 function TurtleHelper.mineTo(origin, destination)
     local resultant = destination - origin
+    local state = State.load()
 
     -- y
     if resultant.y > 0 then
-        for i = 0, resultant.y, 1 do
+        for i = 0, resultant.y-1, 1 do
             if turtle.detectUp() then
                 assert(turtle.digUp())
             end
             assert(turtle.up())
         end
     else
-        for i = 0, resultant.y, -1 do
+        for i = 0, resultant.y+1, -1 do
             if turtle.detectDown() then
                 assert(turtle.digDown())
             end
             assert(turtle.down())
         end
     end
-    print("Hit Y level" .. resultant.y)
+    state["y"] = destination.y
+
     -- x
     TurtleHelper.turnTowards(resultant.x,0)
-    for i = 0, math.abs(resultant.x), 1 do
+    for i = 0, math.abs(resultant.x)-1, 1 do
         if turtle.detect() then
             assert(turtle.dig())
         end
         assert(turtle.forward())
     end
+    state["x"] = destination.x
 
-    print("Hit X level" .. resultant.x)
     -- z
     TurtleHelper.turnTowards(0,resultant.z)
-    for i = 0, math.abs(resultant.z), 1 do
+    for i = 0, math.abs(resultant.z)-1, 1 do
         if turtle.detect() then
             assert(turtle.dig())
         end
         assert(turtle.forward())
     end
+    state["z"] = destination.z
 
-    print("Hit Z level" .. resultant.x)
+    State.save(state)
 
 end
 
-
+function TurtleHelper.mineMove(x,y,z)
+    local turtle_loc = Coordinate.new(gps.locate())
+    local turtle_relative = turtle_loc + Coordinate.new(x,y,z)
+    TurtleHelper.mineTo(turtle_loc,turtle_relative)
+end
 
 function TurtleHelper.checkIf(desired_block,pitch)
     --reading block info from correct pitch
