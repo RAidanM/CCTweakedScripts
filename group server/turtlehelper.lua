@@ -30,32 +30,26 @@ function TurtleHelper.turnTowards(x, z)
         print("No need to turn")
         return false
     elseif goal == 3 and facing == 0 then
-        turtle.turnRight()
-    elseif goal == 0 and facing == 3 then
         turtle.turnLeft()
+    elseif goal == 0 and facing == 3 then
+        turtle.turnRight()
     elseif goal > facing then
-        for i = facing, goal, 1 do
+        for i = facing, goal-1, 1 do
             turtle.turnRight()
         end
     elseif goal < facing then
-        for i = facing, goal, -1 do
+        for i = facing, goal+1, -1 do
             turtle.turnLeft()
         end
     end
 
-    if goal == facing then
-        state["facing"] = goal
-        State.save(state)
-    else
-        print("Facing Conflict")
-    end
+    state["facing"] = goal
+    State.save(state)
 end
 
 -- @param 
 function TurtleHelper.mineTo(origin, destination)
     local resultant = destination - origin
-    
-
 
     -- y
     if resultant.y > 0 then
@@ -75,32 +69,25 @@ function TurtleHelper.mineTo(origin, destination)
     end
     print("Hit Y level" .. resultant.y)
     -- x
-    if resultant.x > 0 then
-        for i = 0, resultant.x, 1 do
-
-            if turtle.detectUp() then
-                assert(turtle.digUp())
-            end
-            assert(turtle.up())
-
+    TurtleHelper.turnTowards(resultant.x,0)
+    for i = 0, math.abs(resultant.x), 1 do
+        if turtle.detect() then
+            assert(turtle.dig())
         end
-    else
-        for i = 0, resultant.y, -1 do
-            if turtle.detectDown() then
-                assert(turtle.digDown())
-            end
-            assert(turtle.down())
-        end
+        assert(turtle.forward())
     end
-    print("Hit Y level" .. resultant.y)
+
+    print("Hit X level" .. resultant.x)
     -- z
-    
+    TurtleHelper.turnTowards(0,resultant.z)
+    for i = 0, math.abs(resultant.z), 1 do
+        if turtle.detect() then
+            assert(turtle.dig())
+        end
+        assert(turtle.forward())
+    end
 
-
-
-
-
-
+    print("Hit Z level" .. resultant.x)
 
 end
 
