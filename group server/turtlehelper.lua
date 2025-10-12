@@ -29,16 +29,16 @@ function TurtleHelper.turnTowards(x, z)
     if goal == facing then
         print("No need to turn")
         return false
-    elseif goal == 3 & facing == 0 then
+    elseif goal == 3 and facing == 0 then
         turtle.turnRight()
-    elseif goal == 0 & facing == 3 then
+    elseif goal == 0 and facing == 3 then
         turtle.turnLeft()
     elseif goal > facing then
-        for i = goal, facing, 1 do
+        for i = facing, goal, 1 do
             turtle.turnRight()
         end
     elseif goal < facing then
-        for i = goal, facing, 1 do
+        for i = facing, goal, -1 do
             turtle.turnLeft()
         end
     end
@@ -46,6 +46,8 @@ function TurtleHelper.turnTowards(x, z)
     if goal == facing then
         state["facing"] = goal
         State.save(state)
+    else
+        print("Facing Conflict")
     end
 end
 
@@ -140,6 +142,7 @@ end
 
 -- might break in fluids (water, lava)
 function TurtleHelper.calibrate()
+    local state = State.load()
     local turtle_loc = Coordinate.new(gps.locate())
     local turtle_new_loc
 
@@ -150,19 +153,19 @@ function TurtleHelper.calibrate()
         if (resultant.z == -1) then
             print("Facing North")
             assert(turtle.back())
-            return 0
+            state["facing"] = 0
         elseif (resultant.x == 1) then
             print("Facing East")
             assert(turtle.back())
-            return 1
+            state["facing"] = 1 
         elseif (resultant.z == 1) then
             print("Facing South")
             assert(turtle.back())
-            return 2
+            state["facing"] = 2
         elseif (resultant.x == -1) then
             print("Facing West")
             assert(turtle.back())
-            return 3
+            state["facing"] = 3
         else 
             print("calibrattion failed")
         end
@@ -170,7 +173,7 @@ function TurtleHelper.calibrate()
     else
         print("Can't calibrate. Surrounded by blocks")
     end
-    
+    State.save(state)
 end
 
 return TurtleHelper
