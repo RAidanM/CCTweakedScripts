@@ -170,6 +170,12 @@ function TurtleHelper.corridorTo(origin, destination)
 
 end
 
+function TurtleHelper.corridorMove(x,y,z)
+    local turtle_loc = Coordinate.new(gps.locate())
+    local turtle_relative = turtle_loc + Coordinate.new(x,y,z)
+    TurtleHelper.corridorTo(turtle_loc,turtle_relative)
+end
+
 function TurtleHelper.checkIf(desired_block,pitch)
     --reading block info from correct pitch
     local has_block, block_info
