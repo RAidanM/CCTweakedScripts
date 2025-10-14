@@ -31,9 +31,72 @@ TurtleHelper.mineTo(turtle_loc, start_coordinate)
 
 --mine area
 local resultant = end_coordinate - start_coordinate
+local height = resultant.y
+while height >= 0 do
+    if height <= 1 then
+        --mine square
+        -- -y
+    else if y >= 2 then
+        -- down 1
+        -- mine corridor
+        -- down 1
+        -- -3y
 
-
-    for i = 0, resultant, -1 do
-        
     end
+end
+
+
+
+
+end
+y == 0
+    --cut square
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- first move
+if y >= 2 then
+    TurtleHelper.mineMove(0,-1,0)
+    --dig square corridor
+    y = y -2
+    TurtleHelper.mineMove(0,-1,0)
+
+end
+-- second move
+while y > 0 do
+    if y >= 3
+        TurtleHelper.mineMove(0,-2,0)
+        --dig square corridor
+        TurtleHelper.mineMove(0,-1,0)
+        y = y -3
+elseif y == 2 then
+    TurtleHelper.mineMove(0,-1,0)
+    --dig square corridor
+    TurtleHelper.mineMove(0,-1,0)
+    y = y - 2
+    elseif y == 1 then
+        TurtleHelper.mineMove(0,-1,0)
+    --dig square
+    y = y - 1
+end
 
