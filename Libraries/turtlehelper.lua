@@ -50,7 +50,6 @@ end
 -- @param 
 function TurtleHelper.mineTo(origin, destination)
     local resultant = destination - origin
-    local state = State.load()
 
     -- y
     if resultant.y > 0 then
@@ -68,7 +67,6 @@ function TurtleHelper.mineTo(origin, destination)
             assert(turtle.down())
         end
     end
-    state["y"] = destination.y
 
     -- x
     TurtleHelper.turnTowards(resultant.x,0)
@@ -78,7 +76,6 @@ function TurtleHelper.mineTo(origin, destination)
         end
         assert(turtle.forward())
     end
-    state["x"] = destination.x
 
     -- z
     TurtleHelper.turnTowards(0,resultant.z)
@@ -88,9 +85,7 @@ function TurtleHelper.mineTo(origin, destination)
         end
         assert(turtle.forward())
     end
-    state["z"] = destination.z
 
-    State.save(state)
 
 end
 
