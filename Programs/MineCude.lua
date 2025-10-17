@@ -38,18 +38,26 @@ while height >= 0 do
     if height <= 1 then
         
         TurtleHelper.mineMove(0,0,lap)
-        for i = 0, resultant.x, 1 do
+        for i = 0, direction, 1 do
             lap = lap * -1
             TurtleHelper.mineMove(1,0,lap)
         end
-        height = heigh - 1
-    else if y >= 2 then
-        -- down 1
-        -- mine corridor
-        -- down 1
-        -- -3y
 
+        height = heigh - 1
+    else if height >= 2 then
+
+        TurtleHelper.mineMove(0,-1,0)
+
+        TurtleHelper.mineCorridor(0,0,lap)
+        for i = 0, direction, 1 do
+            lap = lap * -1
+            TurtleHelper.mineCorridor(1,0,lap)
+        end
+
+        TurtleHelper.mineMove(0,-1,0)
+        height = heigh - 3
     end
+    direction = direction * -1
 end
 
 
