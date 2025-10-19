@@ -26,39 +26,70 @@ else
     end_coordinate = extrema_one
 end
 
-print("Travellign to " .. start_coordinate)
+--print("Travelling to " .. start_coordinate) points to table index 
 TurtleHelper.mineTo(turtle_loc, start_coordinate)
 
 --mine area
 local resultant = end_coordinate - start_coordinate
-local height = resultant.y
+
+local levels = math.abs(resultant.y)
+local updown = (resultant.y >= 0) and 1 or -1
+local turtle_level = 0
+
+local distance = math.abs(resultant.x) - 1
+local side = (resultant.x >= 0) and 1 or -1
+
 local lap = resultant.z
-local direction = resultant.x
-while height >= 0 do
-    if height <= 1 then
-        
-        TurtleHelper.mineMove(0,0,lap)
-        for i = 0, direction, 1 do
-            lap = lap * -1
-            TurtleHelper.mineMove(1,0,lap)
-        end
 
-        height = heigh - 1
-    else if height >= 2 then
-
-        TurtleHelper.mineMove(0,-1,0)
-
-        TurtleHelper.mineCorridor(0,0,lap)
-        for i = 0, direction, 1 do
-            lap = lap * -1
-            TurtleHelper.mineCorridor(1,0,lap)
-        end
-
-        TurtleHelper.mineMove(0,-1,0)
-        height = heigh - 3
-    end
-    direction = direction * -1
+--reference for layers
+TurtleHelper.mineMove(0,0,lap)
+for i = 0, distance, 1 do
+    lap = lap * -1
+    TurtleHelper.mineMove(1,0,lap)
 end
+
+local i = 0
+while i < levels do
+    if i + 2 < levels then --use corridor at i+1
+
+        -- moves to correct level
+        while turtle_level < i+1 do
+            TurtleHelper.mineMove(0,updown,0)
+            turtle_level = turtle_level + 1
+        end
+        
+        -- mines out corridor area
+        TurtleHelper.corridorMove(0,0,lap)
+        for i = 0, distance, 1 do
+            lap = lap * -1
+            TurtleHelper.corridorMove(side,0,lap)
+        end
+        side = side * -1
+
+        --moves to end of cleared area
+        TurtleHelper.mineMove(0,updown,0)
+
+        i = i + 3
+    else --use path at i
+
+         -- moves to correct level
+        while turtle_level < i do
+            TurtleHelper.mineMove(0,updown,0)
+            turtle_level = turtle_level + 1
+        end
+        
+        -- mines out corridor area
+        TurtleHelper.mineMove(0,0,lap)
+        for i = 0, distance, 1 do
+            lap = lap * -1
+            TurtleHelper.mineMove(side,0,lap)
+        end
+        side = side * -1
+
+        i = i + 1
+    end
+end
+
 
 
 
