@@ -99,7 +99,6 @@ end
 function TurtleHelper.corridorTo(origin, destination)
     print('Mining corridor towards: ' .. destination.x .. ", " .. destination.y .. ", " .. destination.z)
     local resultant = destination - origin
-    local state = State.load()
 
     -- y
     if resultant.y > 0 then
@@ -117,7 +116,6 @@ function TurtleHelper.corridorTo(origin, destination)
             assert(turtle.down())
         end
     end
-    state["y"] = destination.y
 
     -- x
     TurtleHelper.turnTowards(resultant.x,0)
@@ -139,7 +137,6 @@ function TurtleHelper.corridorTo(origin, destination)
     if turtle.detectDown() then
         assert(turtle.digDown())
     end
-    state["x"] = destination.x
 
     -- z
     TurtleHelper.turnTowards(0,resultant.z)
@@ -161,9 +158,6 @@ function TurtleHelper.corridorTo(origin, destination)
     if turtle.detectDown() then
         assert(turtle.digDown())
     end
-    state["z"] = destination.z
-
-    State.save(state)
 
 end
 
