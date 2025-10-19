@@ -10,24 +10,24 @@ function TurtleHelper.turnTowards(x, z)
     local facing = state["facing"]
     local goal = facing
     if z < 0  then
-        print("Turning North (-z)")
+        --print("Turning North (-z)")
         goal = 0
     elseif x > 0 then
-        print("Turning East (+x)")
+        --print("Turning East (+x)")
         goal = 1
     elseif z > 0 then
-        print("Turning South (+z)")
+        --print("Turning South (+z)")
         goal = 2
     elseif x < 0 then
-        print("Turning West (-x)")
+        --print("Turning West (-x)")
         goal = 3
     else
-        print("No need to turn")
+        --print("No need to turn")
         return false
     end
 
     if goal == facing then
-        print("No need to turn")
+        --print("No need to turn")
         return false
     elseif goal == 3 and facing == 0 then
         turtle.turnLeft()
@@ -49,6 +49,7 @@ end
 
 -- @param 
 function TurtleHelper.mineTo(origin, destination)
+    print('Mining towards: ' .. destination.x .. ", " .. destination.y .. ", " .. destination.z)
     local resultant = destination - origin
 
     -- y
@@ -96,6 +97,7 @@ function TurtleHelper.mineMove(x,y,z)
 end
 
 function TurtleHelper.corridorTo(origin, destination)
+    print('Mining corridor towards: ' .. destination.x .. ", " .. destination.y .. ", " .. destination.z)
     local resultant = destination - origin
     local state = State.load()
 

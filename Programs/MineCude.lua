@@ -42,12 +42,6 @@ local side = (resultant.x >= 0) and 1 or -1
 local lap = resultant.z
 
 --reference for layers
-TurtleHelper.mineMove(0,0,lap)
-for i = 0, distance, 1 do
-    lap = lap * -1
-    TurtleHelper.mineMove(1,0,lap)
-end
-
 local i = 0
 while i < levels do
     if i + 2 < levels then --use corridor at i+1
