@@ -32,7 +32,7 @@ TurtleHelper.mineTo(turtle_loc, start_coordinate)
 --mine area
 local resultant = end_coordinate - start_coordinate
 
-local levels = math.abs(resultant.y)
+local levels = math.abs(resultant.y) + 1
 local updown = (resultant.y >= 0) and 1 or -1
 local turtle_level = 0
 
@@ -62,6 +62,7 @@ while i < levels do
 
         --moves to end of cleared area
         TurtleHelper.mineMove(0,updown,0)
+        turtle_level = turtle_level + 1
 
         i = i + 3
     else --use path at i
@@ -82,6 +83,7 @@ while i < levels do
 
         i = i + 1
     end
+    lap = lap * -1
 end
 
 
