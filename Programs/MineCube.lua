@@ -42,9 +42,9 @@ local lap = resultant.z
 -- check fuel levels
 local fuel_needed = 0
 local initial_resultant = turtle_loc - start_coordinate
-fuel_needed = initial_resultant.x + initial_resultant.y + initial_resultant.z --fuel to get to start
-            + resultant.y + ( (resultant.y % 3) * resultant.z * resultant.x ) --fuel to mine single paths
-            + ( math.floor(resultant.y / 3) * resultant.z * resultant.x ) --fuel to mine corridors
+fuel_needed = math.abs(initial_resultant.x) + math.abs(initial_resultant.y) + math.abs(initial_resultant.z) + math.abs(resultant.y) --fuel to get to start
+fuel_needed = fuel_needed + ( ((math.abs(resultant.y)+1) % 3) * (math.abs(resultant.z)+1) * (math.abs(resultant.x)+1) ) --fuel to mine single paths
+            + ( math.floor((math.abs(resultant.y)+1) / 3) * (math.abs(resultant.z)+1) * (math.abs(resultant.x)+1) ) --fuel to mine corridors
 local turtle_fuel = turtle.getFuelLevel()
 print("This job with use " .. fuel_needed .. " fuel")
 print("Turtle has " .. turtle_fuel .. " fuel")
