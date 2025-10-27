@@ -55,14 +55,14 @@ function TurtleHelper.mineTo(origin, destination)
     -- y
     if resultant.y > 0 then
         for i = 0, resultant.y-1, 1 do
-            if turtle.detectUp() then
+            while turtle.detectUp() do
                 assert(turtle.digUp())
             end
             assert(turtle.up())
         end
     else
         for i = 0, resultant.y+1, -1 do
-            if turtle.detectDown() then
+            while turtle.detectDown() do
                 assert(turtle.digDown())
             end
             assert(turtle.down())
@@ -72,7 +72,7 @@ function TurtleHelper.mineTo(origin, destination)
     -- x
     TurtleHelper.turnTowards(resultant.x,0)
     for i = 0, math.abs(resultant.x)-1, 1 do
-        if turtle.detect() then
+        while turtle.detect() do
             assert(turtle.dig())
         end
         assert(turtle.forward())
@@ -81,7 +81,7 @@ function TurtleHelper.mineTo(origin, destination)
     -- z
     TurtleHelper.turnTowards(0,resultant.z)
     for i = 0, math.abs(resultant.z)-1, 1 do
-        if turtle.detect() then
+        while turtle.detect() do
             assert(turtle.dig())
         end
         assert(turtle.forward())
@@ -103,14 +103,14 @@ function TurtleHelper.corridorTo(origin, destination)
     -- y
     if resultant.y > 0 then
         for i = 0, resultant.y-1, 1 do
-            if turtle.detectUp() then
+            while turtle.detectUp() do
                 assert(turtle.digUp())
             end
             assert(turtle.up())
         end
     else
         for i = 0, resultant.y+1, -1 do
-            if turtle.detectDown() then
+            while turtle.detectDown() do
                 assert(turtle.digDown())
             end
             assert(turtle.down())
@@ -120,42 +120,42 @@ function TurtleHelper.corridorTo(origin, destination)
     -- x
     TurtleHelper.turnTowards(resultant.x,0)
     for i = 0, math.abs(resultant.x)-1, 1 do
-        if turtle.detect() then
+        while turtle.detect() do
             assert(turtle.dig())
         end
-        if turtle.detectUp() then
+        while turtle.detectUp() do
             assert(turtle.digUp())
         end
-        if turtle.detectDown() then
+        while turtle.detectDown() do
             assert(turtle.digDown())
         end
         assert(turtle.forward())
     end
-    if turtle.detectUp() then
+    while turtle.detectUp() do
         assert(turtle.digUp())
     end
-    if turtle.detectDown() then
+    while turtle.detectDown() do
         assert(turtle.digDown())
     end
 
     -- z
     TurtleHelper.turnTowards(0,resultant.z)
     for i = 0, math.abs(resultant.z)-1, 1 do
-        if turtle.detect() then
+        while turtle.detect() do
             assert(turtle.dig())
         end
-        if turtle.detectUp() then
+        while turtle.detectUp() do
             assert(turtle.digUp())
         end
-        if turtle.detectDown() then
+        while turtle.detectDown() do
             assert(turtle.digDown())
         end
         assert(turtle.forward())
     end
-    if turtle.detectUp() then
+    while turtle.detectUp() do
         assert(turtle.digUp())
     end
-    if turtle.detectDown() then
+    while turtle.detectDown() do
         assert(turtle.digDown())
     end
 
